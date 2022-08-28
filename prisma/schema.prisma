@@ -10,9 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id     Int      @id @unique @default(autoincrement())
+  email  String   @unique
+  name   String?
+  dayOff DayOff[]
+  craftblock String
+}
+
+model DayOff {
+  id     Int      @id @default(autoincrement())
+  date   DateTime
+  user   User     @relation(fields: [userId], references: [id])
+  userId Int
+  createdAt DateTime @default(now())
 }
